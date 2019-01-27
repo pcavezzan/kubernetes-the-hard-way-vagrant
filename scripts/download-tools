@@ -34,6 +34,11 @@ tar -xf "crio-amd64-${crio_version}.tar.gz"
 
 mv runc.amd64 runc
 
+## Install manually Docker
+curl -sSL \
+  -O https://download.docker.com/linux/static/stable/x86_64/docker-17.03.2-ce.tgz
+tar -xf docker-17.03.2-ce.tgz 
+
 curl -sSL \
   -O "https://github.com/containous/traefik/releases/download/${traefik_version}/traefik_linux-amd64"
 

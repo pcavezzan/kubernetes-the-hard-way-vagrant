@@ -14,6 +14,7 @@ set -euo pipefail
 apt-get update
 apt-get install -y socat libgpgme11
 
+
 mkdir -p \
   /etc/containers \
   /etc/cni/net.d \
@@ -23,7 +24,7 @@ mkdir -p \
   /var/lib/kubelet \
   /var/lib/kube-proxy \
   /var/lib/kubernetes \
-  /var/run/kubernetes
+  /var/run/kubernetes 
 
 tar -xvf /vagrant/tools/cni-plugins-amd64-v0.6.0.tgz -C /opt/cni/bin/
 
@@ -48,8 +49,20 @@ cp "/vagrant/config/$(hostname)-kubelet.service" /etc/systemd/system/kubelet.ser
 
 cp /vagrant/config/kube-proxy.service /etc/systemd/system/
 
+## Docker settings
+groupadd docker
+usermod -aG docker $USER
+echo 'GRUB_CMDLINE_LINUX="$GRUB_CMDLINE_LINUX cgroup_enable=memory swapaccount=1"' >> /etc/default/grub
+cp /vagrant/tools/docker/* /usr/local/bin/
+cp /vagrant/config/docker.service /etc/systemd/system/
+
 systemctl daemon-reload
-systemctl enable crio kubelet kube-proxy
-systemctl start crio kubelet kube-proxy
+systemctl enable docker kubelet kube-proxy
+systemctl start docker kubelet kube-proxy
+
 EOF
+  
+  vagrant reload "worker-${i}" --provision
 done
+
+
