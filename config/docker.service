@@ -1,0 +1,35 @@
+[Unit]
+Description=Docker Application Container Engine
+Documentation=http://docs.docker.io
+
+[Service]
+Type=notify
+
+# DOCKER_RAMDISK disables pivot_root in Docker, using MS_MOVE instead.
+Environment=DOCKER_RAMDISK=yes
+
+ExecStart=/usr/local/bin/dockerd -H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock --log-level=error
+ExecReload=/bin/kill -s HUP 
+Restart=on-failure
+RestartSec=5
+
+# Having non-zero Limit*s causes performance problems due to accounting overhead
+# in the kernel. We recommend using cgroups to do container-local accounting.
+LimitNOFILE=infinity
+LimitNPROC=infinity
+LimitCORE=infinity
+
+# Uncomment TasksMax if your systemd version supports it.
+# Only systemd 226 and above support this version.
+TasksMax=infinity
+TimeoutStartSec=0
+
+# set delegate yes so that systemd does not reset the cgroups of docker containers
+Delegate=yes
+
+# kill only the docker process, not all processes in the cgroup
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target
+
