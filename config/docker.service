@@ -8,7 +8,7 @@ Type=notify
 # DOCKER_RAMDISK disables pivot_root in Docker, using MS_MOVE instead.
 Environment=DOCKER_RAMDISK=yes
 
-ExecStart=/usr/local/bin/dockerd -H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock --log-level=error
+ExecStart=/usr/local/bin/dockerd -H tcp://0.0.0.0:2376 -H unix:///var/run/docker.sock --log-level=error --iptables=false --ip-masq=false 
 ExecReload=/bin/kill -s HUP 
 Restart=on-failure
 RestartSec=5

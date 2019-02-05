@@ -9,8 +9,8 @@ for i in {0..2}; do
 [Unit]
 Description=Kubernetes Kubelet
 Documentation=https://github.com/GoogleCloudPlatform/kubernetes
-After=crio.service
-Requires=crio.service
+After=docker.service
+Requires=docker.service
 
 [Service]
 ExecStart=/usr/local/bin/kubelet \\

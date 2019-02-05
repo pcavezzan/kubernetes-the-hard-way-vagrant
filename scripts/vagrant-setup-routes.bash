@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+sleep 10
+
 case "$(hostname)" in
 worker-0)
   route add -net 10.21.0.0/16 gw 192.168.199.21
