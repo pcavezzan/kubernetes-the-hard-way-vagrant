@@ -7,13 +7,12 @@ readonly dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 pushd "${dir}/../"
 trap 'popd' EXIT
 
-# ./scripts/distclean
-# ./scripts/download-tools
+./scripts/distclean
+./scripts/download-tools
 vagrant up
 ./scripts/generate-certs
 ./scripts/generate-kubeconfig-kube-proxy
 ./scripts/generate-kubeconfig-worker
-./scripts/generate-cni-config
 ./scripts/generate-service-files
 ./scripts/setup-etcd
 ./scripts/setup-controller-services
