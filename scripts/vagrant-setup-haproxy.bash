@@ -53,6 +53,18 @@ backend k8s_backend
 	server controller-0 192.168.199.10:6443 check inter 1000
 	server controller-1 192.168.199.11:6443 check inter 1000
 	server controller-2 192.168.199.12:6443 check inter 1000
+
+frontend nodes
+	bind 192.168.199.40:80
+	default_backend k8s_nodes
+
+backend k8s_nodes
+	balance roundrobin
+	mode tcp
+	server worker-0 192.168.199.20:80 check inter 1000
+	server worker-1 192.168.199.21:80 check inter 1000
+	server worker-2 192.168.199.22:80 check inter 1000
+
 EOF
 
 systemctl restart haproxy

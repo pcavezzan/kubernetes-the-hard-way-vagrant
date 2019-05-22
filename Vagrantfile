@@ -5,7 +5,7 @@ Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/bionic64"
 
   config.vm.provider "virtualbox" do |vb|
-    vb.memory = "512"
+    vb.memory = "2048"
     vb.customize ["modifyvm", :id, "--audio", "none"]
   end
 
@@ -30,7 +30,7 @@ Vagrant.configure("2") do |config|
         # c.vm.provision :shell, :path => "scripts/vagrant-setup-routes.bash"
 
         c.vm.provider "virtualbox" do |vb|
-          vb.memory = "640"
+          vb.memory = "1024"
         end
     end
   end
